@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ContentLayoutComponent } from './layout/components/content-layout/content-layout.component';
-import { DetailMovieComponent } from './detailMovie/components/detailMovie.component';
 
 const routes: Routes = [
   {
@@ -15,15 +14,15 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        //component: HomeComponent
-        // Ya no se carga el componente, se carga el modulo mediante un dynamic import de js nativo
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
       },
       {
         path: 'movie/:id',
-        //component: HomeComponent
-        // Ya no se carga el componente, se carga el modulo mediante un dynamic import de js nativo
         loadChildren: () => import('./detailMovie/detailMovie.module').then(m => m.DetailMovieModule)
+      },
+      {
+        path: 'new-movie',
+        loadChildren: () => import('./addMovie/addMovie.module').then(m => m.AddMovieModule)
       },
       {
           path: '**',

@@ -1,0 +1,63 @@
+<div class="row col-md-6 offset-md-3 mt-3">
+    <h3>Agregar nueva pelicula</h3>
+    <div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Titulo:</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Sinopsis:</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Actores:</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Foto de portada:</label>
+            <input type="file" class="file-input" (change)="onChange($event)" #fileUpload />
+
+<div *ngIf="file">
+  <section class="file-info">
+    File details:
+    <ul>
+      <li>Name: {{file.name}}</li>
+      <li>Type: {{file.type}}</li>
+      <li>Size: {{file.size}} bytes</li>
+    </ul>
+  </section>
+
+  <button (click)="onUpload()">Upload the file</button>
+
+  <section [ngSwitch]="status">
+    <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
+    <p *ngSwitchCase="'success'">✅ Done!</p>
+    <p *ngSwitchCase="'fail'">❌ Error!</p>
+    <p *ngSwitchDefault>😶 Waiting to upload...</p>
+  </section>
+</div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Categorias:</label>
+            <div class="row m-0">
+                <div class="col-md-8 p-0">
+                    <input (keyup.enter)="addGenre()" #txtGenre type="text" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="col-md-4 p-0">
+                    <button (click)="addGenre()" type="button" class="btn btn-primary">Agregar</button>
+                </div>
+            </div>
+            <div class="row">
+                <ul class="list-group-item">
+                    <li *ngFor="let genre of genres; index as i; first as isFirst">
+                        {{genre.name}}
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
+                        <!-- <span *ngIf="isFirst">default</span> -->
+                      </li>
+                </ul>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success">Guardar</button>
+    </div>
+</div>

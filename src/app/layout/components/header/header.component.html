@@ -6,13 +6,13 @@
     </button>
 
     <div class="row collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="row col-8 offset-md-4">
-            <form class="col-4 row form-inline my-2 my-lg-0 d-flex justify-content-end">
+        <div class="row col-9 offset-md-3">
+            <form  *ngIf="router.url != '/new-movie'" class="col-4 row form-inline my-2 my-lg-0 d-flex justify-content-end">
                 <input class="col form-control mr-sm-2" type="search" placeholder="Accion, romance" aria-label="Search">
                 <button class="col-3 btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </form>
             <div class="col-8 d-flex justify-content-end">
-                <a href="#">Agregar pelicula</a>
+                <a routerLink="/new-movie" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">Agregar pelicula</a>
             </div>
         </div>
     </div>
