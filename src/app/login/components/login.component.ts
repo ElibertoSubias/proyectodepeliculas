@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
     private apiService: ApiService
   ){
     this.loginForm = this.fb.group({
-      usuario: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      contrasenia: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
+      usuario: ['', [Validators.required]],
+      contrasenia: ['', [Validators.required]]
     })
   }
 

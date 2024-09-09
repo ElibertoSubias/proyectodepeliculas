@@ -7,6 +7,14 @@
           <p class="card-text">{{movie.sinopsis}}</p>
           <h2 class="card-title">Actores:</h2>
           <p class="card-text">{{movie.actores}}</p>
+          <h2 class="card-title">Categorias:</h2>
+          <div class="mb-3">
+            <ul class="list-group">
+                <li  class="estilo-cat list-group-item d-flex justify-content-between" *ngFor="let categoria of movie.categorias; index as i; first as isFirst">
+                    {{categoria.name}}
+                  </li>
+            </ul>
+        </div>
       </div>
       </div>
       <a class="btn btn-primary mb-3" [routerLink]="['/edit-movie/',movie.idMovie]" routerLinkActive="active" ariaCurrentWhenActive="page">Editar</a>
