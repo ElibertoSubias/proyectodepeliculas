@@ -1,11 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ContentLayoutComponent } from './layout/components/content-layout/content-layout.component';
+import { AppGuard } from './guards/auth.guard';
 
-const routes: Routes = [
+export const APP_ROUTES: Routes = [
+  {
+    path: 'login',
+    data: { title: 'Login' },
+    loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
   {
     path:'',
     component: ContentLayoutComponent,
+    canActivate: [AppGuard],
+    data: { title: 'Home' },
     children: [
       {
         path:'',
@@ -14,7 +27,11 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+      },
+      {
+        path: 'home/:filter',
+        loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
       {
         path: 'movie/:id',
@@ -25,16 +42,20 @@ const routes: Routes = [
         loadChildren: () => import('./addMovie/addMovie.module').then(m => m.AddMovieModule)
       },
       {
+        path: 'edit-movie/:id',
+        loadChildren: () => import('./editMovie/editMovie.module').then(m => m.EditMovieModule)
+      },
+      {
           path: '**',
           redirectTo: 'home',
           pathMatch: 'full',
       }
     ]
-  },
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{
+  imports: [RouterModule.forRoot(APP_ROUTES,{
     preloadingStrategy: PreloadAllModules
   })],
   exports: [RouterModule]

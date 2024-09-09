@@ -1,2 +1,14 @@
-<p>Detalle de pelicula con el id: ({{idMovie}})</p>
-<a routerLink="..">regresar</a>
+<div class="row col-md-8 offset-md-2 mt-3 cont-body p-4">
+    <a routerLink="..">Volver</a>
+    <div *ngIf="movie" class="card mb-3 p-0 align-items-center">
+        <img style="width: 400px;" src="{{baseUrl+'/'+movie.portada}}" class="card-img-top" alt="...">
+        <div class="card-body color-fondo-info" style="width: 100%;">
+          <h2 class="card-title">{{movie.titulo}}</h2>
+          <p class="card-text">{{movie.sinopsis}}</p>
+          <h2 class="card-title">Actores:</h2>
+          <p class="card-text">{{movie.actores}}</p>
+      </div>
+      </div>
+      <a class="btn btn-primary mb-3" [routerLink]="['/edit-movie/',movie.idMovie]" routerLinkActive="active" ariaCurrentWhenActive="page">Editar</a>
+      <button type="button" class="btn btn-danger" (click)="removeMovie()">Eliminar</button>
+</div>

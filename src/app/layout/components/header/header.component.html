@@ -1,19 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-4 cont-nav">
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
+    <div class="container-fluid">
     <a class="navbar-brand" href="#">Listado de Peliculas</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="row collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="row col-9 offset-md-3">
-            <form  *ngIf="router.url != '/new-movie'" class="col-4 row form-inline my-2 my-lg-0 d-flex justify-content-end">
-                <input class="col form-control mr-sm-2" type="search" placeholder="Accion, romance" aria-label="Search">
-                <button class="col-3 btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-            </form>
-            <div class="col-8 d-flex justify-content-end">
-                <a routerLink="/new-movie" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">Agregar pelicula</a>
+    <div class="row collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div class="d-flex justify-content-end">
+            <div class="form-inline my-2 my-lg-0 d-flex justify-content-end">
+                <input #txtFiltro (keyup.enter)="filterMovies()" class="col form-control mr-sm-2" type="search" placeholder="Accion, romance" aria-label="Search">
+                <button (keyup.enter)="filterMovies()" class="col-3 btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
             </div>
         </div>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item m-2">
+                <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">Home</a>
+            </li>
+            <li class="nav-item m-2">
+                <a routerLink="/new-movie" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none"
+                >Agregar pelicula</a>
+            </li>
+            <li class="nav-item m-2">
+                <button (click)="salir()">Salir</button>
+            </li>
+        </ul>
+    </div>
     </div>
 </nav>

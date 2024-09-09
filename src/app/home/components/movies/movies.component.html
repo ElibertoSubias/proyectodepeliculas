@@ -1,87 +1,25 @@
 <div class="row" style="margin: 0px 2%">
     <div class="col-md-4 mt-4 mb-3 ml-0 mr-0 p-0">
-        <div class=" row">
-            <label for="staticEmail" class="col-sm-4 col-form-label">Filtrar por genero:</label>
-            <div class="col-sm-8 p-0">
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
+        <div class="d-flex justify-end align-items-center col-form-start p-3">
+            <label for="staticEmail" class="d-flex justify-end col-form-label">Ordenar por:</label>
+            <button class="btn btn-primary m-2" (click)="changeOrderBy()">
+                <svg class="d-flex justify-end col-form-label" xmlns="http://www.w3.org/2000/svg" height="44px" viewBox="0 0 24 24" width="24px" fill="#fff"><path d="M0 0h24v24H0V0zm0 0h24v24H0V0zm.75.75h22.5v22.5H.75z" fill="none"/><path d="M14.94 4.66h-4.72l2.36-2.36zm-4.69 14.71h4.66l-2.33 2.33zM6.1 6.27L1.6 17.73h1.84l.92-2.45h5.11l.92 2.45h1.84L7.74 6.27H6.1zm-1.13 7.37l1.94-5.18 1.94 5.18H4.97zm10.76 2.5h6.12v1.59h-8.53v-1.29l5.92-8.56h-5.88v-1.6h8.3v1.26l-5.93 8.6z"/></svg>
+            </button>
         </div>
     </div>
 </div>
 <div class="row row-cols-1 row-cols-md-3 g-4" style="margin: 0px 1%">
-    <a routerLink="/movie/1" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
+    <a *ngFor="let movie of movies" [routerLink]="['/movie/',movie.idMovie]" routerLinkActive="active" ariaCurrentWhenActive="page" class="text-decoration-none">
         <div class="col">
-            <div class="card" style="height: 400px !important;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+            <div class="card">
+                <div class="cont-image">
+                    <img src="{{baseUrl+'/'+movie.portada}}" class="card-img-top" alt="...">
                 </div>
-            </div>
-        </div>
-    </a>
-    <a routerLink="/movie/2" class="text-decoration-none">
-        <div class="col">
-            <div class="card" style="height: 400px !important;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
-                </div>
-            </div>
-        </div>
-    </a>
-    <a routerLink="/movie/3" class="text-decoration-none">
-        <div class="col">
-            <div class="card" style="height: 400px !important;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
-                </div>
-            </div>
-        </div>
-    </a>
-    <a routerLink="/movie/4" class="text-decoration-none">
-        <div class="col">
-            <div class="card" style="height: 400px !important;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
-                </div>
-            </div>
-        </div>
-    </a>
-    <a routerLink="/movie/1" class="text-decoration-none">
-        <div class="col">
-            <div class="card" style="height: 400px !important;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
-                </div>
-            </div>
-        </div>
-    </a>
-    <a routerLink="/movie/1" class="text-decoration-none">
-        <div class="col">
-            <div class="card" style="height: 400px !important;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                <div class="card-body color-fondo-info" style="height: 200px;">
+                    <h2 class="card-title">{{movie.titulo}}</h2>
+                    <p class="card-text">{{movie.sinopsis.substring(0, 100)}}</p>
+                    <h2 class="card-title">Actores:</h2>
+                    <p class="card-text">{{movie.actores.substring(0, 150)}}</p>
                 </div>
             </div>
         </div>

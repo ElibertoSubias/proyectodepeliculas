@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Genre } from '../../interfaces/Genre';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
@@ -8,14 +8,18 @@ import { MoviesService } from '../../services/movies.service';
 
 @Component({
   selector: 'app-workspace',
-  templateUrl: './addMovie.component.html',
-  styleUrls: ['./addMovie.component.scss']
+  templateUrl: './editMovie.component.html',
+  styleUrls: ['./editMovie.component.scss']
 })
-export class AddMovieComponent implements OnInit {
+export class EditMovieComponent implements OnInit {
 
   movieForm: FormGroup;
+  movie: any = {};
+  idMovie: number = 0;
+  id: string = "";
 
   constructor(
+    private route:ActivatedRoute,
     private http: HttpClient, 
     private fb: FormBuilder,
     private moviesService : MoviesService,
@@ -26,16 +30,16 @@ export class AddMovieComponent implements OnInit {
       sinopsis: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       actores: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
       portada: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      categoria: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      categorias: ['', [Validators.required]],
     })
   }
 
 
-  @ViewChild('txtTitulo') txtTitulo:ElementRef | undefined;
-  @ViewChild('txtSinopsis') txtSinopsis:ElementRef | undefined;
-  @ViewChild('txtActores') txtActores:ElementRef | undefined;
-  @ViewChild('fileUpload') fileUpload:ElementRef | undefined;
-  @ViewChild('txtCategoria') txtCategoria:ElementRef | undefined;
+  @ViewChild('txtTitulo') txtTitulo!:ElementRef;
+  @ViewChild('txtSinopsis') txtSinopsis!:ElementRef;
+  @ViewChild('txtActores') txtActores!:ElementRef;
+  @ViewChild('fileUpload') fileUpload!:ElementRef;
+  @ViewChild('txtCategoria') txtCategoria!:ElementRef;
 
   titulo: string = "";
   sinopsis: string = "";
@@ -48,25 +52,45 @@ export class AddMovieComponent implements OnInit {
   file?: File;
 
   ngOnInit(): void {
+    this.idMovie = this.route.snapshot.params['id'];
 
+    this.moviesService.getMovie(this.idMovie).subscribe({
+      next: (event: any) => {
+        this.movie = event.movieExistente;
+        this.id = this.movie._id;
+        this.categorias = this.movie.categorias;
+        this.movieForm.patchValue({
+          titulo: this.movie.titulo,
+          sinopsis: this.movie.sinopsis,
+          actores: this.movie.actores,
+          portada: this.movie.portada,
+          categorias: this.movie.categorias
+        });
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert("Ocurrio un error al obtener la pelicula");
+      },
+    });
   }
 
   saveMovie() {
     this.movieForm.value.categorias = this.categorias;
-    this.movieForm.value.portada = this.file?.name;
-    this.moviesService.saveMovie(this.movieForm.value).subscribe({
+    this.movieForm.value.portada = this.file ? this.file.name : this.movieForm.value.portada;
+    this.moviesService.updateMovie(this.movieForm.value, this.id).subscribe({
       next: (event: any) => {
         
         // Subimos portada en caso de ser grabada con exito la pelicula
-        this.onUpload(event.movie._id);
+        if (this.file) {
+          this.onUpload(event.movie._id);
+        } else {
+          this.router.navigate([`/movie/${this.idMovie}`]);
+        }
         
       },
       error: (err: any) => {
-        alert("Ocurrio un error al crear la pelicula, intenta de nuevo.");
         console.log(err);
-      },
-      complete: () => {
-        // this.currentFile = undefined;
+        alert("Ocurrio un error al actualizar la pelicula, intenta de nuevo.");
       },
     });
   }
@@ -94,15 +118,12 @@ export class AddMovieComponent implements OnInit {
         next: (event: any) => {
           
           // Correcto
-          this.router.navigate([`/home`]);
+          this.router.navigate([`/movie/${this.idMovie}`]);
           
         },
         error: (err: any) => {
-          alert("Ocurrio un error al crear la pelicula, intenta de nuevo.");
           console.log(err);
-        },
-        complete: () => {
-          // this.currentFile = undefined;
+          alert("Ocurrio un error al actualizar la pelicula, intenta de nuevo.");
         },
       });
     }

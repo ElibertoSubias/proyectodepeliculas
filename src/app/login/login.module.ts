@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
-import { AddMovieComponent } from './components/addMovie.component';
-import { AddMovieRoutingModule } from './addMovie-routing.module';
+import { LoginComponent } from './components/login.component';
+import { LoginRoutingModule } from './login-routing.module';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -11,11 +11,11 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 @NgModule({
     declarations: [
-        AddMovieComponent
+        LoginComponent
     ],
     imports: [
         CommonModule,
-        AddMovieRoutingModule,
+        LoginRoutingModule,
         SharedModule,
         MatButtonModule, 
         MatIconModule,
@@ -24,4 +24,4 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
     ],
     providers: [provideHttpClient(), HttpClient]
 })
-export class AddMovieModule { }
+export class LoginModule { }

@@ -8,6 +8,13 @@ import { HeaderComponent } from './layout/components/header/header.component';
 import { FooterComponent } from './layout/components/footer/footer.component';
 import { ContentLayoutComponent } from './layout/components/content-layout/content-layout.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ConfigService } from './services/config.service';
+import { HttpClientModule } from '@angular/common/http';
+
+export function ConfigLoader(ConfigService: ConfigService) {
+  return () => ConfigService.getJSON();
+}
 
 @NgModule({
   declarations: [
@@ -21,9 +28,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync(),
+    ConfigService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
