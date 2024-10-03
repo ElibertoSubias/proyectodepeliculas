@@ -14,13 +14,13 @@ export class MoviesService {
     public saveMovie(data: any): Observable<any> {
         const token = this.getToken();
         const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
-        return this.http.post<any>(`${environment.appBaseUrl}/movies`, JSON.stringify(data), {headers});
+        return this.http.post<any>(`${environment.appBaseUrl}/dresses`, JSON.stringify(data), {headers});
     }
 
     public updateMovie(data: any, id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'Content-Type': 'application/json', 'x-auth-token': `${token}` };
-        return this.http.put<any>(`${environment.appBaseUrl}/movies/${id}`, JSON.stringify(data), {headers});
+        return this.http.put<any>(`${environment.appBaseUrl}/dresses/${id}`, JSON.stringify(data), {headers});
     }
 
     public removeMovie(id: string): Observable<any> {
@@ -32,21 +32,25 @@ export class MoviesService {
     public uploadImage(file: any, id: string): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.post<any>(`${environment.appBaseUrl}/archivos/${id}`, file, {headers});
+        return this.http.post<any>(`${environment.appBaseUrl}/files/${id}`, file, {headers});
     }
 
     public getAllMovies(): Observable<any> {
-        return this.http.get<any>(`${environment.appBaseUrl}/movies`);
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/dresses`, { headers });
     }
 
     public getMoviesByFilter(titulo: string): Observable<any> {
-        return this.http.get<any>(`${environment.appBaseUrl}/movies/titulo/${titulo}`);
+        const token = this.getToken();
+        const headers = { 'x-auth-token': `${token}` };
+        return this.http.get<any>(`${environment.appBaseUrl}/movies/titulo/${titulo}`, { headers });
     }
 
     public getMovie(id: number): Observable<any> {
         const token = this.getToken();
         const headers = { 'x-auth-token': `${token}` };
-        return this.http.get<any>(`${environment.appBaseUrl}/movies/${id}`, {headers});
+        return this.http.get<any>(`${environment.appBaseUrl}/dresses/${id}`, {headers});
     }
 
     setToken(token: any) {

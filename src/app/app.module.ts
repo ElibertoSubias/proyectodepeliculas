@@ -6,6 +6,7 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { HeaderComponent } from './layout/components/header/header.component';
 import { FooterComponent } from './layout/components/footer/footer.component';
+import { NavLeftComponent } from './layout/components/nav-left/nav-left.component';
 import { ContentLayoutComponent } from './layout/components/content-layout/content-layout.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -21,7 +22,8 @@ export function ConfigLoader(ConfigService: ConfigService) {
     AppComponent,
     ContentLayoutComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    NavLeftComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { MoviesService } from '../../../services/movies.service';
 import { environment } from '../../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-workspace',
@@ -18,7 +19,9 @@ export class MoviesComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private moviesService : MoviesService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private cookies : CookieService
   ) {
     
    }
@@ -29,22 +32,32 @@ export class MoviesComponent implements OnInit {
     if (this.route.snapshot.queryParams['filter']) {
       this.moviesService.getMoviesByFilter(this.route.snapshot.queryParams['filter']).subscribe({
         next: (event: any) => {
-          this.movies = event.peliculas;
+          this.movies = event.dresses;
         },
         error: (err: any) => {
           console.log(err);
-          alert("Ocurrio un error al obtener la informacion.");
+          if (err.status == 401) {
+            this.cookies.delete("token");
+            this.router.navigate([`/login`]);
+          } else {
+            alert("Ocurrio un error al obtener la informacion.");
+          }
         },
       });
     } else {
       this.moviesService.getAllMovies().subscribe({
         next: (event: any) => {
-          this.movies = event.peliculas;
-          this.movies = this.sortMovie();
+          this.movies = event.dresses;
+          // this.movies = this.sortMovie();
         },
         error: (err: any) => {
           console.log(err);
-          alert("Ocurrio un error al obtener las informacion.");
+          if (err.status == 401) {
+            this.cookies.delete("token");
+            this.router.navigate([`/login`]);
+          } else {
+            alert("Ocurrio un error al obtener las informacion.");
+          }
         },
       });
     }
@@ -58,8 +71,8 @@ export class MoviesComponent implements OnInit {
   sortMovie() {
     let order = this.defaultOrder;
     const rta = this.movies.sort(function(a, b){
-      if(a.titulo.toLowerCase() < b.titulo.toLowerCase()) { return order ? -1 : 1; }
-      if(a.titulo.toLowerCase() > b.titulo.toLowerCase()) { return order ? 1 : -1; }
+      if(a.idDress < b.idDress) { return order ? -1 : 1; }
+      if(a.idDress > b.idDress) { return order ? 1 : -1; }
       return 0;
   })
     return rta;

@@ -7,15 +7,19 @@
     overflow:hidden;
 }
 
-.cont-image img{    
+.cont-image img {    
     flex-shrink:0;
     -webkit-flex-shrink: 0;
     max-width:70%;
     max-height:90%;
 }
 
+.titulo_item {
+    color: #848484;
+}
+
 .color-fondo-info {
-    background-color: gainsboro;
+    // background-color: gainsboro;
 }
 
 .color-fondo-info h2 {

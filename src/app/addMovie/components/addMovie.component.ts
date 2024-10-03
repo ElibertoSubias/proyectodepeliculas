@@ -23,26 +23,41 @@ export class AddMovieComponent implements OnInit {
   ){
     this.movieForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      sinopsis: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
-      actores: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
-      portada: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-      categoria: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+      descripcion: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
+      color: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(400)]],
+      stockS: ['', [Validators.required]],
+      stockM: ['', [Validators.required]],
+      stockL: ['', [Validators.required]],
+      stockXL: ['', [Validators.required]],
+      categorias: ['', [Validators.required]],
+      precio: ['', [Validators.required]],
+      imagenUrl: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]]
     })
   }
 
 
-  @ViewChild('txtTitulo') txtTitulo:ElementRef | undefined;
-  @ViewChild('txtSinopsis') txtSinopsis:ElementRef | undefined;
-  @ViewChild('txtActores') txtActores:ElementRef | undefined;
-  @ViewChild('fileUpload') fileUpload:ElementRef | undefined;
-  @ViewChild('txtCategoria') txtCategoria:ElementRef | undefined;
+  @ViewChild('txtTitulo') txtTitulo!:ElementRef;
+  @ViewChild('txtDescripcion') txtDescripcion!:ElementRef;
+  @ViewChild('txtColor') txtColor!:ElementRef;
+  @ViewChild('txtStockS') txtStockS!:ElementRef;
+  @ViewChild('txtStockM') txtStockM!:ElementRef;
+  @ViewChild('txtStockL') txtStockL!:ElementRef;
+  @ViewChild('txtStockXL') txtStockXL!:ElementRef;
+  @ViewChild('txtCategoria') txtCategoria!:ElementRef;
+  @ViewChild('fileImagenUrl') fileImagenUrl!:ElementRef;
+  @ViewChild('txtPrecio') txtPrecio!:ElementRef;
 
   titulo: string = "";
-  sinopsis: string = "";
-  actores: string = "";
-  portada: string = "";
+  descripcion: string = "";
+  color: string = "";
+  stockS: string = "";
+  stockM: string = "";
+  stockL: string = "";
+  stockXL: string = "";
   categoria: string = "";
-  categorias: Genre[] = [];
+  categorias: String[] = [];
+  imagenUrl: string = "";
+  precio: string = "";
 
   status: "initial" | "uploading" | "success" | "fail" = "initial"; // Variable to store file status
   file?: File;
@@ -53,12 +68,12 @@ export class AddMovieComponent implements OnInit {
 
   saveMovie() {
     this.movieForm.value.categorias = this.categorias;
-    this.movieForm.value.portada = this.file?.name;
+    this.movieForm.value.imagenUrl = this.file?.name;
     this.moviesService.saveMovie(this.movieForm.value).subscribe({
       next: (event: any) => {
         
         // Subimos portada en caso de ser grabada con exito la pelicula
-        this.onUpload(event.movie._id);
+        this.onUpload(event.dress._id);
         
       },
       error: (err: any) => {
@@ -81,7 +96,7 @@ export class AddMovieComponent implements OnInit {
   }
 
   addPortada() {
-    this.fileUpload?.nativeElement.click();
+    this.fileImagenUrl?.nativeElement.click();
   }
 
   onUpload(id: string) {
@@ -110,16 +125,15 @@ export class AddMovieComponent implements OnInit {
 
   addGenre() {
     if (this.txtCategoria?.nativeElement.value) {
-      var newItem: Genre = {name: this.txtCategoria?.nativeElement.value};
-      this.categorias.push(newItem);
+      this.categorias.push(this.txtCategoria?.nativeElement.value);
       this.txtCategoria.nativeElement.value = "";
     } else {
       this.txtCategoria?.nativeElement.focus();
     }
   }
 
-  deleteGenre(categoria: string) {
-    this.categorias = this.categorias.filter(item => item.name !== categoria)
+  deleteGenre(idItem: String) {
+    this.categorias = this.categorias.filter(item => item !== idItem)
   }
 
 }

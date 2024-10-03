@@ -10,11 +10,6 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
     path:'',
     component: ContentLayoutComponent,
     canActivate: [AppGuard],
@@ -27,22 +22,27 @@ export const APP_ROUTES: Routes = [
       },
       {
         path: 'home',
+        canActivate: [AppGuard],
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
       {
         path: 'home/:filter',
+        canActivate: [AppGuard],
         loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
       },
       {
         path: 'movie/:id',
+        canActivate: [AppGuard],
         loadChildren: () => import('./detailMovie/detailMovie.module').then(m => m.DetailMovieModule)
       },
       {
         path: 'new-movie',
+        canActivate: [AppGuard],
         loadChildren: () => import('./addMovie/addMovie.module').then(m => m.AddMovieModule)
       },
       {
         path: 'edit-movie/:id',
+        canActivate: [AppGuard],
         loadChildren: () => import('./editMovie/editMovie.module').then(m => m.EditMovieModule)
       },
       {
